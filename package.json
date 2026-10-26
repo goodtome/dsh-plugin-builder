@@ -1,0 +1,16 @@
+{
+  "name": "dsh-plugin-builder",
+  "productName": "DSH Plugin Builder",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Mac 图形化 DSH 插件打包工具",
+  "main": "src/main.cjs",
+  "scripts": {
+    "test": "node --test test/*.test.cjs",
+    "package:mac": "node package-mac.cjs"
+  },
+  "dependencies": {
+    "js-yaml": "4.3.2",
+    "semver": "7.8.5"
+  }
+}

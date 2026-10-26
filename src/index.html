@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'">
+<title>DSH 插件打包工具</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="titlebar">DSH Plugin Builder</div>
+<main>
+<header><div><p class="eyebrow">源码 → DSH 插件</p><h1>把插件准备好。</h1><p class="intro">选择源码，生成可在 DSH 中安装的插件包。</p></div><div class="format" aria-label="输出格式 tgz">.tgz<span>插件包</span></div></header>
+<section class="workflow" aria-label="打包设置">
+<div class="section-head"><span class="step">1</span><h2>导入源码</h2><button id="source" class="secondary">选择文件夹</button></div>
+<div id="empty" class="empty"><strong>选择已有 DSH 插件的源码目录</strong><p>目录内需有 package.json 和 DSH 组合包声明。支持 JS、TS 与前端插件。</p></div>
+<div id="project" hidden><div class="project-top"><strong id="name"></strong><span id="version"></span></div><p id="source-path" class="path"></p><p id="description"></p><p id="installed" class="installed-note"></p></div>
+<div id="checks" aria-live="polite"></div>
+</section>
+<section class="workflow output-section">
+<div class="section-head"><span class="step">2</span><h2>输出与构建</h2><button id="output" class="secondary">选择位置</button></div>
+<p id="output-path" class="path placeholder">选择源码目录以外的文件夹</p>
+<div class="filename-row"><label for="filename">插件包名称</label><div class="filename-control"><input id="filename" type="text" spellcheck="false" autocomplete="off" placeholder="导入源码后填写" disabled><span>.tgz</span></div></div>
+<p class="identity-note">这里只修改导出文件名。DSH 按包内的插件名识别；同名插件已安装时，请先在 DSH 中卸载旧版。</p>
+<div class="options"><label><input id="build" type="checkbox" disabled><span>打包前运行构建<small id="build-note">导入源码后自动识别构建脚本</small></span></label><label><input id="install" type="checkbox" disabled><span>自动安装构建依赖<small>需要联网；禁用依赖安装脚本</small></span></label></div>
+</section>
+<section class="workflow preview-section">
+<div class="section-head"><span class="step">3</span><h2>预览打包内容</h2><button id="preview" class="secondary" disabled>预览文件</button></div>
+<p id="preview-summary" class="section-note">先检查会进入插件包的文件，再生成。</p>
+<p id="preview-origins" class="section-note"></p>
+<p id="preview-risks" class="error" hidden role="alert"></p>
+<details id="preview-list" hidden><summary>查看文件清单</summary><ul id="preview-files"></ul></details>
+</section>
+<div class="action-row"><p id="status" role="status">准备就绪，先选择源码。</p><button id="cancel" class="secondary" hidden>取消</button><button id="pack" class="primary" disabled>生成插件包</button></div>
+<p id="phase" class="phase-note" hidden></p>
+<section id="result" class="result" hidden aria-live="polite"><div class="result-details"><strong>插件包已生成</strong><p class="result-hint">可在下方直接选择本机客户端安装，也可复制路径手动导入。同名插件已安装时，请先在 DSH 中卸载旧版。</p><p id="result-file" class="path"></p><p id="result-identity"></p><p id="result-meta"></p><p id="copy-feedback" class="copy-feedback" role="status" hidden></p></div><div class="result-actions"><button id="copy" class="primary">复制安装路径</button><button id="reveal" class="secondary">在 Finder 中显示</button></div></section>
+<section id="client-panel" class="workflow" hidden><div class="section-head"><h2>直接安装到本机客户端</h2><button id="refresh-clients" class="secondary">重新扫描</button></div><p class="section-note">选择已初始化的 DSH 架构客户端。安装前请完全退出该客户端。</p><div class="client-actions"><select id="client-target" aria-label="选择目标客户端"></select><button id="install-client" class="primary" disabled>安装到所选客户端</button></div><p id="client-status" class="section-note" role="status"></p></section>
+<section id="verify-panel" class="workflow verify-section" hidden><div class="section-head"><span class="step">4</span><h2>临时 DSH 验证</h2><button id="choose-cli" class="secondary">选择 DSH CLI</button></div><p id="cli-status" class="section-note"></p><p class="section-note">在临时 Web Profile 中安装并启动 Host。此项会运行插件代码，不覆盖浏览器交互。</p><div class="verify-actions"><label><input id="offline" type="checkbox" checked>仅使用本地依赖缓存</label><button id="verify" class="primary">验证 DSH 加载</button></div><p id="verify-status" class="section-note">未验证</p></section>
+<p id="error" class="error" hidden role="alert"></p>
+<details id="logs"><summary>构建日志 <span id="log-state">等待开始</span></summary><pre id="log" tabindex="0"></pre></details>
+<footer>生成标准 .tgz 包、SHA256 和检查报告。可选临时 DSH Web Host 加载验证；浏览器交互需另行确认。</footer>
+</main><script src="renderer.js"></script>
+</body></html>
